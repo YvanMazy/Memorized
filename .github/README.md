@@ -17,5 +17,42 @@ Here is a list of current features:
 * Custom distributed objects
 * And many more!
 
+## ✍️ Examples
+
+See full examples [here](https://github.com/Darkkraft/Memorized/tree/master/examples/src/main/java/be/darkkraft/memorized/example).
+
+#### Start a Memorized client
+
+```java
+public class MyClient {
+
+    public static void main(final String[] args) {
+        final MemorizedClient client = new MemorizedClientBuilder().serverAddress(new InetSocketAddress("127.0.0.1", 12345))
+                .authenticationInput(new UnsecureAuthenticationInput())
+                .codecRegistry(new DefaultCodecRegistry().registerDefaults())
+                .keyRegistry(new ClassKeyRegistry())
+                .build();
+        client.start();
+    }
+}
+```
+
+#### Start a Memorized server
+
+```java
+public class MyServer {
+
+    public static void main(final String[] args) {
+        final MemorizedServer server = new MemorizedServerBuilder().address(new InetSocketAddress("127.0.0.1", 12345))
+                .workerThreads(1)
+                .authenticator(new UnsecureAuthenticator())
+                .codecRegistry(new DefaultCodecRegistry().registerDefaults())
+                .dataRepositoryCoordinator(new DataRepositoryCoordinator())
+                .build();
+        server.start();
+    }
+}
+```
+
 ## ⚙️ Requirements
 * Java 17 or higher
