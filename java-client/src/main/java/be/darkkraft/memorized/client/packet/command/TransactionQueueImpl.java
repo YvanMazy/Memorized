@@ -31,7 +31,7 @@ public class TransactionQueueImpl implements TransactionQueue {
      *
      * @param client The {@link MemorizedClient} with which the transaction queue is associated.
      */
-    public TransactionQueueImpl(@NotNull final MemorizedClient client) {
+    public TransactionQueueImpl(final @NotNull MemorizedClient client) {
         this.client = client;
     }
 

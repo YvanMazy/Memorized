@@ -37,7 +37,7 @@ public class BasicKeyRegistry<K> implements KeyRegistry<K> {
      */
     @Override
     @Contract("_, _ -> this")
-    public @NotNull KeyRegistry<K> register(@NotNull final K key, final int identifier) {
+    public @NotNull KeyRegistry<K> register(final @NotNull K key, final int identifier) {
         if (identifier < 0) {
             throw new IllegalArgumentException("Identifier must be positive");
         }
