@@ -17,8 +17,6 @@ public class MyClient {
                 .keyRegistry(new ClassKeyRegistry())
                 .build();
         client.start();
-
-
     }
 
 }

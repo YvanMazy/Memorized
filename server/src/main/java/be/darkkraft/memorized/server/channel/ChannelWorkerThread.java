@@ -79,7 +79,8 @@ public final class ChannelWorkerThread extends Thread {
      * @throws IOException if an I/O error occurs.
      */
     private void handle(final SelectionKey key) throws IOException {
-        if (key.isReadable()) {
+        if (!key.isReadable()) return;
+        try {
             final SocketChannel client = (SocketChannel) key.channel();
             final Session session = this.server.getSession(client);
             if (session == null) {
@@ -107,6 +108,9 @@ public final class ChannelWorkerThread extends Thread {
 
                 this.read(client, buffer, session);
             } while (read > 0);
+        } catch (final Exception exception) {
+            key.channel().close();
+            LOGGER.error("An error occurred while reading packet", exception);
         }
     }
 

@@ -27,14 +27,13 @@ import java.util.concurrent.CountDownLatch;
 
 public class ConcurrentExampleServer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConcurrentExampleServer.class);
-
     public static final int CLIENTS = 10;
     public static final int THREADS = 100;
     public static final int ACTIONS = 100;
     public static final String COUNTER_ID = "my-counter";
-
     public static final int EXPECTED_RESULT = CLIENTS * THREADS * ACTIONS;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConcurrentExampleServer.class);
 
     public static void main(final String[] args) throws InterruptedException {
         final InetSocketAddress address = new InetSocketAddress("127.0.0.1", 12345);

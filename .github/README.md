@@ -1,15 +1,22 @@
 # Memorized
 
 ---
+
 ### 🏗️ This project is still in development.
-This project is still in development, it is not yet possible to use it. The project is subject to significant change in the future.
+
+This project is still in development, it is not yet possible to use it. The project is subject to significant change in
+the future.
 
 ## ❓ Goal of Memorized server
-**Memorized** is a standalone cache server written in **Java**. Its goal is to create a really lightweight and efficient cache server with high **flexibility**.
+
+**Memorized** is a standalone cache server written in **Java**. Its goal is to create a really lightweight and efficient
+cache server with high **flexibility**.
 This project does not use a library to manage connections between server and client, but instead uses a NIO server.
 
 ## ✨ Features
+
 Here is a list of current features:
+
 * Custom authentication
 * Customizable codec system
 * Multithreaded client connection management
@@ -19,7 +26,8 @@ Here is a list of current features:
 
 ## ✍️ Examples
 
-See full examples [here](https://github.com/Darkkraft/Memorized/tree/master/examples/src/main/java/be/darkkraft/memorized/example).
+See full
+examples [here](https://github.com/Darkkraft/Memorized/tree/master/examples/src/main/java/be/darkkraft/memorized/example).
 
 #### Start a Memorized client
 
@@ -55,4 +63,5 @@ public class MyServer {
 ```
 
 ## ⚙️ Requirements
+
 * Java 17 or higher
