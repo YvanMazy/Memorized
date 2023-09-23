@@ -12,7 +12,7 @@ the future.
 * [Goal of Memorized server](https://github.com/Darkkraft/Memorized#-goal-of-memorized-server)
 * [When to use?](https://github.com/Darkkraft/Memorized#-when-to-use)
 * [Features](https://github.com/Darkkraft/Memorized#-features)
-* [How to use?](https://github.com/Darkkraft/Memorized#-how-to-use)
+* [How to use?](https://github.com/Darkkraft/Memorized#%EF%B8%8F-how-to-use)
 * [Examples](https://github.com/Darkkraft/Memorized#%EF%B8%8F-examples)
 * [Requirements](https://github.com/Darkkraft/Memorized#%EF%B8%8F-requirements)
 
