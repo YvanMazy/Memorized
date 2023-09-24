@@ -3,8 +3,6 @@ package be.darkkraft.memorized.client.data.map;
 import be.darkkraft.memorized.client.MemorizedClient;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteBuffer;
-
 /**
  * Provides a client-side implementation of a {@link ClientMemorizedMap} using strings as keys.
  *
@@ -38,15 +36,14 @@ public final class StringMemorizedMap<K, V> extends ClientMemorizedMap<K, V> {
         this.id = id;
     }
 
-    /**
-     * Writes the identifier of the map to the given {@link ByteBuffer}.
-     *
-     * @param buffer The {@link ByteBuffer} to write the identifier into.
-     * @return The {@link ByteBuffer} with the identifier added.
-     */
     @Override
-    protected @NotNull ByteBuffer writeId(final @NotNull ByteBuffer buffer) {
-        return this.client().getCodecRegistry().encode(buffer.putInt(this.getKeyIdentifier(String.class)), this.id);
+    protected @NotNull Class<?> getKeyClass() {
+        return String.class;
+    }
+
+    @Override
+    protected @NotNull String getKeyId() {
+        return this.id;
     }
 
 }

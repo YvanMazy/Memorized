@@ -3,8 +3,6 @@ package be.darkkraft.memorized.client.data.counter;
 import be.darkkraft.memorized.client.MemorizedClient;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteBuffer;
-
 /**
  * Provides a client-side implementation of a {@link ClientIntCounter} using strings as keys.
  */
@@ -33,11 +31,12 @@ public class StringIntCounter extends ClientIntCounter {
     }
 
     @Override
-    protected @NotNull ByteBuffer writeId(final @NotNull ByteBuffer buffer) {
-        return this.client().getCodecRegistry().encode(buffer.putInt(this.getKeyIdentifier(String.class)), this.getId());
+    protected @NotNull Class<?> getKeyClass() {
+        return String.class;
     }
 
-    public String getId() {
+    @Override
+    protected @NotNull String getKeyId() {
         return this.id;
     }
 

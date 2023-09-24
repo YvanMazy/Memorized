@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.client.data;
 
 import be.darkkraft.memorized.client.MemorizedClient;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
@@ -9,6 +10,8 @@ import java.nio.ByteBuffer;
  * Provides an abstract base class for client accessors that require identifier handling.
  */
 public abstract class IdentifiableClientAccessor extends ClientAccessor {
+
+    protected int keyIdentifier = -1;
 
     /**
      * Creates a new IdentifiableClientAccessor with a given client.
@@ -33,6 +36,27 @@ public abstract class IdentifiableClientAccessor extends ClientAccessor {
      * @return The modified {@link ByteBuffer} containing the identifier.
      */
     @NotNull
-    protected abstract ByteBuffer writeId(@NotNull ByteBuffer buffer);
+    protected ByteBuffer writeId(final @NotNull ByteBuffer buffer) {
+        if (this.keyIdentifier == -1) {
+            this.keyIdentifier = this.getKeyIdentifier(this.getKeyClass());
+        }
+        return this.client().getCodecRegistry().encode(buffer.putInt(this.keyIdentifier), this.getKeyId());
+    }
+
+    /**
+     * Gets the key class for this accessor.
+     *
+     * @return The key class for this accessor.
+     */
+    @Contract(pure = true)
+    protected abstract @NotNull Class<?> getKeyClass();
+
+    /**
+     * Gets the key identifier for this accessor.
+     *
+     * @return The key identifier for this accessor.
+     */
+    @Contract(pure = true)
+    protected abstract @NotNull Object getKeyId();
 
 }
