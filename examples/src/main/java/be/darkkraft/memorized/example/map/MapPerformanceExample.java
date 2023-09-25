@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class MapPerformanceTest {
+public class MapPerformanceExample {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapPerformanceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapPerformanceExample.class);
 
     private static final int ACTIONS = 100_000;
 

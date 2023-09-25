@@ -39,7 +39,7 @@ public class CustomDistributed {
         final DataRepositoryCoordinator dataRepositoryCoordinator = new DataRepositoryCoordinator().register(repository);
 
         final MemorizedServer server = new MemorizedServerBuilder().address(address)
-                .workerThreads(1)
+                .workerThreads(CLIENTS)
                 .authenticator(authenticator)
                 .codecRegistry(codecRegistry)
                 .dataRepositoryCoordinator(dataRepositoryCoordinator)
