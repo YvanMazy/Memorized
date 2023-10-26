@@ -1,9 +1,8 @@
 package be.darkkraft.memorized.client.auth;
 
 import be.darkkraft.memorized.client.MemorizedClient;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
-
-import java.nio.ByteBuffer;
 
 /**
  * An interface representing authentication input for a {@link MemorizedClient}.
@@ -11,10 +10,10 @@ import java.nio.ByteBuffer;
 public interface AuthenticationInput {
 
     /**
-     * Writes authentication data into the provided {@link ByteBuffer}.
+     * Writes authentication data into the provided {@link ByteBuf}.
      *
-     * @param buffer The {@link ByteBuffer} to write authentication data into.
+     * @param buffer The {@link ByteBuf} to write authentication data into.
      */
-    void write(final @NotNull ByteBuffer buffer);
+    void write(final @NotNull ByteBuf buffer);
 
 }

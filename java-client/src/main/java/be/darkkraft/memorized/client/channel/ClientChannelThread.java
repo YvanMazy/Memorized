@@ -2,6 +2,7 @@ package be.darkkraft.memorized.client.channel;
 
 import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.net.session.Session;
+import be.darkkraft.memorized.packet.ByteBuf;
 import be.darkkraft.memorized.packet.ClientPacket;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +66,7 @@ public final class ClientChannelThread extends Thread {
             this.connectFuture.complete(null);
             this.connectLock.await();
 
-            final ByteBuffer buffer = ByteBuffer.allocate(256).put(ClientPacket.AUTH.getId());
+            final ByteBuf buffer = new ByteBuf().put(ClientPacket.AUTH.getId());
             this.client.getAuthenticationInput().write(buffer);
 
             Session.send(socketChannel, buffer);

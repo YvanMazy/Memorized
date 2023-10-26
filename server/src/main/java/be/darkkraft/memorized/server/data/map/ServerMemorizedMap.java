@@ -4,6 +4,7 @@ import be.darkkraft.memorized.codec.registry.CodecRegistry;
 import be.darkkraft.memorized.data.map.MapUpdate;
 import be.darkkraft.memorized.data.map.MemorizedMap;
 import be.darkkraft.memorized.net.session.Session;
+import be.darkkraft.memorized.packet.ByteBuf;
 import be.darkkraft.memorized.packet.ClientPacket;
 import be.darkkraft.memorized.packet.ServerPacket;
 import be.darkkraft.memorized.server.MemorizedServer;
@@ -92,7 +93,7 @@ public class ServerMemorizedMap<K, V> implements DataContainer {
             return;
         }
 
-        final ByteBuffer result = ByteBuffer.allocate(256).put(ServerPacket.RESULT.getId());
+        final ByteBuf result = new ByteBuf().put(ServerPacket.RESULT.getId());
         registry.encode(result, value);
         session.unsafeSend(result);
     }

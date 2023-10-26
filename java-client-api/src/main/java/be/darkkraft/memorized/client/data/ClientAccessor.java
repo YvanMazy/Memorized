@@ -2,6 +2,7 @@ package be.darkkraft.memorized.client.data;
 
 import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.exception.UnknownMemorizedClient;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -44,20 +45,20 @@ public abstract class ClientAccessor {
     /**
      * Queues a transaction to the client's transaction queue.
      *
-     * @param buffer The {@link ByteBuffer} containing the data for the transaction.
+     * @param buffer The {@link ByteBuf} containing the data for the transaction.
      * @return A {@link CompletableFuture} representing the result of the transaction.
      */
     @NotNull
-    public CompletableFuture<ByteBuffer> queue(final @NotNull ByteBuffer buffer) {
+    public CompletableFuture<ByteBuffer> queue(final @NotNull ByteBuf buffer) {
         return this.client().getTransactionQueue().queue(buffer);
     }
 
     /**
      * Writes data to the client's session.
      *
-     * @param buffer The {@link ByteBuffer} containing the data to be written.
+     * @param buffer The {@link ByteBuf} containing the data to be written.
      */
-    public void write(final @NotNull ByteBuffer buffer) {
+    public void write(final @NotNull ByteBuf buffer) {
         this.client().getSession().unsafeSend(buffer);
     }
 

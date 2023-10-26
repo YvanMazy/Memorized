@@ -1,5 +1,6 @@
 package be.darkkraft.memorized.client.net;
 
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +25,7 @@ public interface TransactionQueue {
      * @param buffer The buffer containing the outgoing data.
      * @return A {@link CompletableFuture} representing the result of the transaction.
      */
-    CompletableFuture<ByteBuffer> queue(@NotNull ByteBuffer buffer);
+    CompletableFuture<ByteBuffer> queue(@NotNull ByteBuf buffer);
 
     /**
      * Retrieves the current size of the transaction queue.

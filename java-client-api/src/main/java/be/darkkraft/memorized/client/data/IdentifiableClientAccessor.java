@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.client.data;
 
 import be.darkkraft.memorized.client.MemorizedClient;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +37,7 @@ public abstract class IdentifiableClientAccessor extends ClientAccessor {
      * @return The modified {@link ByteBuffer} containing the identifier.
      */
     @NotNull
-    protected ByteBuffer writeId(final @NotNull ByteBuffer buffer) {
+    protected ByteBuf writeId(final @NotNull ByteBuf buffer) {
         if (this.keyIdentifier == -1) {
             this.keyIdentifier = this.getKeyIdentifier(this.getKeyClass());
         }

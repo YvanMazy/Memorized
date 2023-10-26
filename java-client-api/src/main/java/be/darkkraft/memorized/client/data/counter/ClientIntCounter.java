@@ -4,9 +4,9 @@ import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.data.IdentifiableClientAccessor;
 import be.darkkraft.memorized.data.counter.CounterUpdate;
 import be.darkkraft.memorized.data.counter.IntCounter;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteBuffer;
 import java.util.concurrent.CompletableFuture;
 
 import static be.darkkraft.memorized.packet.ClientPacket.SHOW;
@@ -35,18 +35,17 @@ public abstract class ClientIntCounter extends IdentifiableClientAccessor implem
 
     @Override
     public @NotNull CompletableFuture<Integer> asyncGet() {
-        return this.queue(this.writeId(ByteBuffer.allocate(256).put(SHOW.getId())))
-                .thenApply(buffer -> buffer == null ? 0 : buffer.getInt());
+        return this.queue(this.writeId(new ByteBuf().put(SHOW.getId()))).thenApply(buffer -> buffer == null ? 0 : buffer.getInt());
     }
 
     @Override
     public void set(final int value) {
-        this.write(this.writeId(ByteBuffer.allocate(256).put(UPDATE.getId()).put(CounterUpdate.SET.getId()).putInt(value)));
+        this.write(this.writeId(new ByteBuf().put(UPDATE.getId()).put(CounterUpdate.SET.getId()).putInt(value)));
     }
 
     @Override
     public void reset() {
-        this.write(this.writeId(ByteBuffer.allocate(256).put(UPDATE.getId()).put(CounterUpdate.RESET.getId())));
+        this.write(this.writeId(new ByteBuf().put(UPDATE.getId()).put(CounterUpdate.RESET.getId())));
     }
 
     @Override
@@ -75,7 +74,7 @@ public abstract class ClientIntCounter extends IdentifiableClientAccessor implem
     }
 
     private CompletableFuture<Integer> operate(final CounterUpdate update, final int value) {
-        return this.queue(this.writeId(ByteBuffer.allocate(256).put(UPDATE.getId())).put(update.getId()).putInt(value))
+        return this.queue(this.writeId(new ByteBuf().put(UPDATE.getId())).put(update.getId()).putInt(value))
                 .thenApply(buffer -> buffer == null ? 0 : buffer.getInt());
     }
 

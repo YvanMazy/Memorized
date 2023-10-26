@@ -2,6 +2,7 @@ package be.darkkraft.memorized.codec.base;
 
 import be.darkkraft.memorized.codec.Codec;
 import be.darkkraft.memorized.codec.registry.CodecRegistry;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
@@ -17,14 +18,14 @@ import java.nio.ByteBuffer;
 public class IntCodec implements Codec<Integer> {
 
     /**
-     * Encodes an {@link Integer} value and writes it to a {@link ByteBuffer}.
+     * Encodes an {@link Integer} value and writes it to a {@link ByteBuf}.
      *
      * @param registry the {@link CodecRegistry} containing available codecs
-     * @param buffer   the target {@link ByteBuffer}
+     * @param buffer   the target {@link ByteBuf}
      * @param value    the {@link Integer} value to encode
      */
     @Override
-    public void encode(final @NotNull CodecRegistry registry, final @NotNull ByteBuffer buffer, final @NotNull Integer value) {
+    public void encode(final @NotNull CodecRegistry registry, final @NotNull ByteBuf buffer, final @NotNull Integer value) {
         buffer.putInt(value);
     }
 

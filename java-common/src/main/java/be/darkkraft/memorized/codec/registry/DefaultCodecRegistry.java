@@ -4,8 +4,10 @@ import be.darkkraft.memorized.codec.Codec;
 import be.darkkraft.memorized.codec.base.IntCodec;
 import be.darkkraft.memorized.codec.base.LongCodec;
 import be.darkkraft.memorized.codec.base.StringCodec;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +54,7 @@ public class DefaultCodecRegistry implements CodecRegistry {
      * @param typeClass the class of the type
      * @param codec     the {@link Codec} to use for the type
      * @param <T>       the type to register
+     *
      * @return this {@link DefaultCodecRegistry}
      */
     @Contract("_, _ -> this")
@@ -62,16 +65,17 @@ public class DefaultCodecRegistry implements CodecRegistry {
     }
 
     /**
-     * Encodes an object to a {@link ByteBuffer}.
+     * Encodes an object to a {@link ByteBuf}.
      *
-     * @param buffer the target {@link ByteBuffer}
+     * @param buffer the target {@link ByteBuf}
      * @param data   the object to encode
-     * @return the {@link ByteBuffer} containing the encoded data
+     *
+     * @return the {@link ByteBuf} containing the encoded data
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Contract("_, _ -> param1")
     @Override
-    public @NotNull ByteBuffer encode(final @NotNull ByteBuffer buffer, final Object data) {
+    public @NotNull ByteBuf encode(final @NotNull ByteBuf buffer, final Object data) {
         final Class<?> typeClass = Objects.requireNonNull(data, "Data cannot be null").getClass();
         final Codec codec = this.codecMap.get(typeClass);
         if (codec == null) {
@@ -88,6 +92,7 @@ public class DefaultCodecRegistry implements CodecRegistry {
      * @param buffer    the source {@link ByteBuffer}
      * @param typeClass the class of the type to decode
      * @param <T>       the type to decode
+     *
      * @return the decoded object
      */
     @SuppressWarnings("unchecked")
@@ -99,6 +104,19 @@ public class DefaultCodecRegistry implements CodecRegistry {
             return null;
         }
         return codec.decode(this, buffer);
+    }
+
+    /**
+     * Get a {@link Codec} from type class.
+     *
+     * @param typeClass the class of type
+     *
+     * @return the {@link Codec} of type class or null if not found
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public @Nullable <T> Codec<T> getCodec(final @NotNull Class<T> typeClass) {
+        return (Codec<T>) this.codecMap.get(Objects.requireNonNull(typeClass, "Type class cannot be null"));
     }
 
 }

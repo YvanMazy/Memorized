@@ -4,10 +4,10 @@ import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.data.IdentifiableClientAccessor;
 import be.darkkraft.memorized.data.map.MapUpdate;
 import be.darkkraft.memorized.data.map.MemorizedMap;
+import be.darkkraft.memorized.packet.ByteBuf;
 import be.darkkraft.memorized.packet.ClientPacket;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteBuffer;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -44,12 +44,13 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      * Asynchronously retrieves a value associated with a given key.
      *
      * @param key The key whose associated value is to be returned.
+     *
      * @return A {@link CompletableFuture} containing the value to which the specified key is mapped, or null if the map contains no mapping for the key.
      */
     @Override
     @NotNull
     public CompletableFuture<V> asyncGet(final @NotNull K key) {
-        final ByteBuffer buffer = this.writeId(ByteBuffer.allocate(256).put(ClientPacket.SHOW.getId()));
+        final ByteBuf buffer = this.writeId(new ByteBuf().put(ClientPacket.SHOW.getId()));
         this.client().getCodecRegistry().encode(buffer, key);
         return this.queue(buffer).thenApply(b -> b != null ? this.client().getCodecRegistry().decode(b, this.valueClass) : null);
     }
@@ -62,7 +63,7 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      */
     @Override
     public void put(final @NotNull K key, final V value) {
-        final ByteBuffer buffer = this.writeId(ByteBuffer.allocate(256).put(ClientPacket.UPDATE.getId())).put(MapUpdate.SET.getId());
+        final ByteBuf buffer = this.writeId(new ByteBuf().put(ClientPacket.UPDATE.getId())).put(MapUpdate.SET.getId());
         this.client().getCodecRegistry().encode(buffer, key);
         this.client().getCodecRegistry().encode(buffer, value);
         this.write(buffer);
@@ -75,7 +76,7 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      */
     @Override
     public void remove(final @NotNull K key) {
-        final ByteBuffer buffer = this.writeId(ByteBuffer.allocate(256).put(ClientPacket.UPDATE.getId())).put(MapUpdate.REMOVE.getId());
+        final ByteBuf buffer = this.writeId(new ByteBuf().put(ClientPacket.UPDATE.getId())).put(MapUpdate.REMOVE.getId());
         this.client().getCodecRegistry().encode(buffer, key);
         this.write(buffer);
     }

@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.net.session;
 
 import be.darkkraft.memorized.exception.PacketWritingException;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,15 +13,38 @@ import java.nio.channels.SocketChannel;
  * Interface representing a network session.
  *
  * @see SocketChannel
- * @see ByteBuffer
+ * @see ByteBuf
  */
 public interface Session {
+
+    /**
+     * Sends a {@link ByteBuf} through a {@link SocketChannel}.
+     *
+     * @param channel the {@link SocketChannel} to send data through
+     * @param byteBuf the {@link ByteBuf} containing the data to send
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    static void send(final @NotNull SocketChannel channel, final @NotNull ByteBuf byteBuf) throws IOException {
+        final int size = byteBuf.position();
+        final ByteBuffer buffer = byteBuf.getBuffer();
+        buffer.limit(size).position(0);
+
+        // Create a buffer with a size prefix
+        final ByteBuffer newBuffer = ByteBuffer.allocate(4 + size).putInt(size).put(buffer).flip();
+
+        buffer.clear();
+        while (newBuffer.hasRemaining()) {
+            channel.write(newBuffer);
+        }
+    }
 
     /**
      * Sends a {@link ByteBuffer} through a {@link SocketChannel}.
      *
      * @param channel the {@link SocketChannel} to send data through
      * @param buffer  the {@link ByteBuffer} containing the data to send
+     *
      * @throws IOException if an I/O error occurs
      */
     static void send(final @NotNull SocketChannel channel, final @NotNull ByteBuffer buffer) throws IOException {
@@ -51,9 +75,9 @@ public interface Session {
     boolean isAuthenticated();
 
     /**
-     * Computes a new {@link ByteBuffer} for this session.
+     * Computes a new {@link ByteBuf} for this session.
      *
-     * @return the computed {@link ByteBuffer}
+     * @return the computed {@link ByteBuf}
      */
     @NotNull ByteBuffer computeBuffer();
 
@@ -72,17 +96,18 @@ public interface Session {
     /**
      * Retrieves the current buffer of this session.
      *
-     * @return the current {@link ByteBuffer}
+     * @return the current {@link ByteBuf}
      */
     @Nullable ByteBuffer getBuffer();
 
     /**
-     * Sends a {@link ByteBuffer} without safety checks, throwing a {@link PacketWritingException} on failure.
+     * Sends a {@link ByteBuf} without safety checks, throwing a {@link PacketWritingException} on failure.
      *
-     * @param buffer the {@link ByteBuffer} to send
-     * @throws PacketWritingException  on failure
+     * @param buffer the {@link ByteBuf} to send
+     *
+     * @throws PacketWritingException on failure
      */
-    default void unsafeSend(final @NotNull ByteBuffer buffer) {
+    default void unsafeSend(final @NotNull ByteBuf buffer) {
         try {
             this.send(buffer);
         } catch (final IOException exception) {
@@ -94,9 +119,36 @@ public interface Session {
      * Sends a {@link ByteBuffer} through this session's {@link SocketChannel}.
      *
      * @param buffer the {@link ByteBuffer} to send
+     *
      * @throws IOException if an I/O error occurs
      */
     default void send(final @NotNull ByteBuffer buffer) throws IOException {
+        send(this.getChannel(), buffer);
+    }
+
+    /**
+     * Sends a {@link ByteBuffer} without safety checks, throwing a {@link PacketWritingException} on failure.
+     *
+     * @param buffer the {@link ByteBuffer} to send
+     *
+     * @throws PacketWritingException on failure
+     */
+    default void unsafeSend(final @NotNull ByteBuffer buffer) {
+        try {
+            this.send(buffer);
+        } catch (final IOException exception) {
+            throw new PacketWritingException(exception);
+        }
+    }
+
+    /**
+     * Sends a {@link ByteBuf} through this session's {@link SocketChannel}.
+     *
+     * @param buffer the {@link ByteBuf} to send
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    default void send(final @NotNull ByteBuf buffer) throws IOException {
         send(this.getChannel(), buffer);
     }
 

@@ -2,9 +2,9 @@ package be.darkkraft.memorized.example.distributed;
 
 import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.data.IdentifiableClientAccessor;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteBuffer;
 import java.util.concurrent.CompletableFuture;
 
 import static be.darkkraft.memorized.packet.ClientPacket.SHOW;
@@ -26,19 +26,18 @@ public class ClientCommonBalance extends IdentifiableClientAccessor implements C
 
     @Override
     public CompletableFuture<Double> asyncBalance() {
-        return this.queue(this.writeId(ByteBuffer.allocate(256).put(SHOW.getId())))
-                .thenApply(buffer -> buffer == null ? 0 : buffer.getDouble());
+        return this.queue(this.writeId(new ByteBuf().put(SHOW.getId()))).thenApply(buffer -> buffer == null ? 0 : buffer.getDouble());
     }
 
     @Override
     public void give(final double amount) {
-        this.write(this.writeId(ByteBuffer.allocate(256).put(UPDATE.getId())).put((byte) 0).putDouble(amount));
+        this.write(this.writeId(new ByteBuf().put(UPDATE.getId())).put((byte) 0).putDouble(amount));
     }
 
     @Override
     public CompletableFuture<Boolean> asyncTryToTake(final double amount) {
-        return this.queue(this.writeId(ByteBuffer.allocate(256).put(UPDATE.getId())).put((byte) 1).putDouble(amount))
-                .thenApply(buffer -> buffer != null && buffer.get() == 0);
+        return this.queue(this.writeId(new ByteBuf().put(UPDATE.getId())).put((byte) 1).putDouble(amount))
+                .thenApply(buffer -> buffer != null && buffer.get() == 1);
     }
 
     @Override

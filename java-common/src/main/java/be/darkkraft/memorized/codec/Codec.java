@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.codec;
 
 import be.darkkraft.memorized.codec.registry.CodecRegistry;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,13 +49,13 @@ public interface Codec<T> {
     }
 
     /**
-     * Encodes an object and writes it to a {@link ByteBuffer}.
+     * Encodes an object and writes it to a {@link ByteBuf}.
      *
      * @param registry the {@link CodecRegistry} containing available codecs
      * @param buffer   the target ByteBuffer
      * @param value    the object to encode
      */
-    void encode(final @NotNull CodecRegistry registry, final @NotNull ByteBuffer buffer, final @NotNull T value);
+    void encode(final @NotNull CodecRegistry registry, final @NotNull ByteBuf buffer, final @NotNull T value);
 
     /**
      * Decodes an object from a {@link ByteBuffer}.

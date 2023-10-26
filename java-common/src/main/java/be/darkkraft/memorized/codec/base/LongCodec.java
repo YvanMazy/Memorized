@@ -2,6 +2,7 @@ package be.darkkraft.memorized.codec.base;
 
 import be.darkkraft.memorized.codec.Codec;
 import be.darkkraft.memorized.codec.registry.CodecRegistry;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.ByteBuffer;
@@ -16,14 +17,14 @@ import java.nio.ByteBuffer;
 public class LongCodec implements Codec<Long> {
 
     /**
-     * Encodes a {@link Long} value and writes it to a {@link ByteBuffer}.
+     * Encodes a {@link Long} value and writes it to a {@link ByteBuf}.
      *
      * @param registry the {@link CodecRegistry} containing available codecs
-     * @param buffer   the target {@link ByteBuffer}
+     * @param buffer   the target {@link ByteBuf}
      * @param value    the {@link Long} value to encode
      */
     @Override
-    public void encode(final @NotNull CodecRegistry registry, final @NotNull ByteBuffer buffer, final @NotNull Long value) {
+    public void encode(final @NotNull CodecRegistry registry, final @NotNull ByteBuf buffer, final @NotNull Long value) {
         buffer.putLong(value);
     }
 

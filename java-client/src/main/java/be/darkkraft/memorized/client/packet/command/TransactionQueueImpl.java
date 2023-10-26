@@ -2,6 +2,7 @@ package be.darkkraft.memorized.client.packet.command;
 
 import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.net.TransactionQueue;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +39,7 @@ public class TransactionQueueImpl implements TransactionQueue {
     /**
      * Completes the current transaction with the given buffer.
      *
-     * @param buffer The {@link ByteBuffer} containing the result of the transaction, can be null.
+     * @param buffer The {@link ByteBuf} containing the result of the transaction, can be null.
      */
     @Override
     public void complete(final @Nullable ByteBuffer buffer) {
@@ -53,12 +54,12 @@ public class TransactionQueueImpl implements TransactionQueue {
     /**
      * Queues a new transaction into the transaction queue.
      *
-     * @param buffer The {@link ByteBuffer} containing the transaction data.
+     * @param buffer The {@link ByteBuf} containing the transaction data.
      * @return A {@link CompletableFuture} representing the future result of the transaction.
      */
     @NotNull
     @Override
-    public CompletableFuture<ByteBuffer> queue(final @NotNull ByteBuffer buffer) {
+    public CompletableFuture<ByteBuffer> queue(final @NotNull ByteBuf buffer) {
         final CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
         this.futures.add(future);
         this.client.getSession().unsafeSend(buffer);

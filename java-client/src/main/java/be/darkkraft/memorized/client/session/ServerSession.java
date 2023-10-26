@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.client.session;
 
 import be.darkkraft.memorized.net.session.Session;
+import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -77,9 +78,9 @@ public class ServerSession implements Session {
     }
 
     /**
-     * Computes a {@link ByteBuffer} to be used for network operations.
+     * Computes a {@link ByteBuf} to be used for network operations.
      *
-     * @return The computed {@link ByteBuffer}.
+     * @return The computed {@link ByteBuf}.
      */
     @Override
     @NotNull
@@ -94,7 +95,7 @@ public class ServerSession implements Session {
     /**
      * Updates the current buffer of the session.
      *
-     * @param buffer The new {@link ByteBuffer} to set.
+     * @param buffer The new {@link ByteBuf} to set.
      */
     @Override
     public void updateBuffer(final @NotNull ByteBuffer buffer) {
@@ -112,7 +113,7 @@ public class ServerSession implements Session {
     /**
      * Gets the current buffer of the session.
      *
-     * @return The current {@link ByteBuffer}.
+     * @return The current {@link ByteBuf}.
      */
     @Override
     @Nullable

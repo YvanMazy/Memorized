@@ -25,7 +25,7 @@ public class ServerCommonBalance implements DataContainer {
 
     @Override
     public void handleUpdate(final @NotNull Session session, final @NotNull ByteBuffer buffer) {
-        final boolean give = buffer.get() == 0;
+        final boolean give = buffer.get() == 1;
         final double amount = buffer.getDouble();
         double current, target;
         byte result = 0;
