@@ -16,6 +16,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -56,7 +57,7 @@ public final class ClientChannelThread extends Thread {
             socketChannel.configureBlocking(false);
             socketChannel.connect(this.client.getServerAddress());
 
-            socketChannel.register(selector, SelectionKey.OP_CONNECT | SelectionKey.OP_READ);
+            socketChannel.register(selector, SelectionKey.OP_READ);
 
             //noinspection StatementWithEmptyBody
             while (!socketChannel.finishConnect()) ;
@@ -94,8 +95,11 @@ public final class ClientChannelThread extends Thread {
      */
     private void selectKey(final @NotNull Selector selector) {
         try {
-            selector.select();
-            final Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
+            final int select = selector.select();
+            if (select == 0) return;
+            final Set<SelectionKey> keys = selector.selectedKeys();
+            if (keys.isEmpty()) return;
+            final Iterator<SelectionKey> iterator = keys.iterator();
 
             while (iterator.hasNext()) {
                 this.handle(iterator.next());
@@ -110,6 +114,7 @@ public final class ClientChannelThread extends Thread {
      * Handles an individual {@link SelectionKey}, taking appropriate actions based on its state.
      *
      * @param key The {@link SelectionKey} to be processed.
+     *
      * @throws Exception Any exception that may occur during the key handling.
      */
     private void handle(final @NotNull SelectionKey key) throws Exception {
@@ -147,6 +152,7 @@ public final class ClientChannelThread extends Thread {
      *
      * @param buffer  The {@link ByteBuffer} containing the packet data.
      * @param session The {@link Session} responsible for handling the packet.
+     *
      * @throws IOException If an I/O error occurs while reading the packet.
      */
     private void read(ByteBuffer buffer, final Session session) throws IOException {

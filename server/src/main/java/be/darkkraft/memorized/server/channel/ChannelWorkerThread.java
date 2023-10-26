@@ -11,6 +11,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.CyclicBarrier;
 
 /**
@@ -61,8 +62,11 @@ public final class ChannelWorkerThread extends Thread {
      */
     private void selectKey() {
         try {
-            this.selector.select();
-            final Iterator<SelectionKey> iterator = this.selector.selectedKeys().iterator();
+            final int select = this.selector.select();
+            if (select == 0) return;
+            final Set<SelectionKey> keys = this.selector.selectedKeys();
+            if (keys.isEmpty()) return;
+            final Iterator<SelectionKey> iterator = keys.iterator();
             while (iterator.hasNext()) {
                 this.handle(iterator.next());
                 iterator.remove();

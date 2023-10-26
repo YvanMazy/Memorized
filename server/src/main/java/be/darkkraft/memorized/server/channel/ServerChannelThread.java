@@ -7,9 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.net.SocketOptions;
+import java.nio.channels.*;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CyclicBarrier;
@@ -56,7 +55,7 @@ public final class ServerChannelThread extends Thread {
         try (final ServerSocketChannel serverSocket = ServerSocketChannel.open()) {
             final InetSocketAddress address = this.server.getAddress();
             serverSocket.bind(address);
-            serverSocket.configureBlocking(false);
+            serverSocket.configureBlocking(true);
 
             this.channel = serverSocket;
 
@@ -78,6 +77,9 @@ public final class ServerChannelThread extends Thread {
             }
 
         } catch (final Exception exception) {
+            if (exception instanceof ClosedChannelException) {
+                return;
+            }
             if (this.bindFuture.isDone()) {
                 LOGGER.error("An error occurred while connecting to the server", exception);
             } else {
