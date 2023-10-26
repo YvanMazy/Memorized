@@ -76,9 +76,7 @@ public final class ClientChannelThread extends Thread {
                 this.selectKey(selector);
             }
 
-            if (this.channel != null) {
-                this.channel.close();
-            }
+            this.close();
         } catch (final Exception exception) {
             if (this.connectFuture.isDone()) {
                 LOGGER.error("An error occurred while connecting to the server", exception);
@@ -130,8 +128,7 @@ public final class ClientChannelThread extends Thread {
 
                     if (read == -1) {
                         LOGGER.warn("Server connection closed by the remote side.");
-                        this.channel.close();
-                        this.channel = null;
+                        this.close();
                         return;
                     } else if (read == 0) {
                         session.removeBuffer();
@@ -142,7 +139,7 @@ public final class ClientChannelThread extends Thread {
                 } while (read > 0);
             }
         } catch (final Exception exception) {
-            this.channel.close();
+            this.close();
             LOGGER.error("An error occurred while reading packet", exception);
         }
     }
@@ -162,7 +159,7 @@ public final class ClientChannelThread extends Thread {
             final int limit = session.isAuthenticated() ? 1048576 : 320;
             if (size > limit) {
                 LOGGER.warn("Failed to handle packet from server. Packet is too big {}/{}", size, limit);
-                this.channel.close();
+                this.close();
                 return;
             }
             session.updateBuffer(buffer = ByteBuffer.allocate(size));
@@ -173,8 +170,7 @@ public final class ClientChannelThread extends Thread {
 
             if (!this.client.handlePacket(buffer)) {
                 LOGGER.warn("Failed to handle packet from server. Removing session and closing connection.");
-                this.channel.close();
-                this.channel = null;
+                this.close();
                 return;
             }
 
@@ -207,7 +203,10 @@ public final class ClientChannelThread extends Thread {
      */
     public void close() {
         try {
-            this.channel.close();
+            if (this.channel != null) {
+                this.channel.close();
+                this.channel = null;
+            }
         } catch (final Exception exception) {
             LOGGER.error("An error occurred during shutdown", exception);
         }
