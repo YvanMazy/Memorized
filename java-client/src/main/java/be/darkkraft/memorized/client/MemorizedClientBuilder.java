@@ -159,7 +159,7 @@ public final class MemorizedClientBuilder {
                 this.authenticationInput,
                 this.codecRegistry,
                 this.keyRegistry,
-                this.configuration);
+                Objects.requireNonNullElseGet(this.configuration, () -> ClientConfiguration.builder().build()));
     }
 
 }
