@@ -71,7 +71,7 @@ public final class ClientChannelThread extends Thread {
             this.client.getAuthenticationInput()
                     .write(buffer);
 
-            Session.send(socketChannel, buffer);
+            Session.sendAndClear(socketChannel, buffer);
 
             while (this.client.isRunning()) {
                 this.selectKey(selector);

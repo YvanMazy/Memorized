@@ -18,12 +18,28 @@ import java.nio.channels.SocketChannel;
 public interface Session {
 
     /**
+     * Sends a {@link ByteBuf} through a {@link SocketChannel} and clear it after write.
+     *
+     * @param channel the {@link SocketChannel} to send data through.
+     * @param byteBuf the {@link ByteBuf} containing the data to send.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
+    static void sendAndClear(final @NotNull SocketChannel channel, final @NotNull ByteBuf byteBuf) throws IOException {
+        try {
+            send(channel, byteBuf);
+        } finally {
+            byteBuf.getBuffer().clear();
+        }
+    }
+
+    /**
      * Sends a {@link ByteBuf} through a {@link SocketChannel}.
      *
-     * @param channel the {@link SocketChannel} to send data through
-     * @param byteBuf the {@link ByteBuf} containing the data to send
+     * @param channel the {@link SocketChannel} to send data through.
+     * @param byteBuf the {@link ByteBuf} containing the data to send.
      *
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occurs.
      */
     static void send(final @NotNull SocketChannel channel, final @NotNull ByteBuf byteBuf) throws IOException {
         final int size = byteBuf.position();
@@ -33,7 +49,6 @@ public interface Session {
         // Create a buffer with a size prefix
         final ByteBuffer newBuffer = ByteBuffer.allocate(4 + size).putInt(size).put(buffer).flip();
 
-        buffer.clear();
         while (newBuffer.hasRemaining()) {
             channel.write(newBuffer);
         }
@@ -42,10 +57,10 @@ public interface Session {
     /**
      * Sends a {@link ByteBuffer} through a {@link SocketChannel}.
      *
-     * @param channel the {@link SocketChannel} to send data through
-     * @param buffer  the {@link ByteBuffer} containing the data to send
+     * @param channel the {@link SocketChannel} to send data through.
+     * @param buffer  the {@link ByteBuffer} containing the data to send.
      *
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occurs.
      */
     static void send(final @NotNull SocketChannel channel, final @NotNull ByteBuffer buffer) throws IOException {
         final int size = buffer.position();
@@ -63,21 +78,21 @@ public interface Session {
     /**
      * Retrieves the {@link SocketChannel} associated with this session.
      *
-     * @return the associated {@link SocketChannel}
+     * @return the associated {@link SocketChannel}.
      */
     @NotNull SocketChannel getChannel();
 
     /**
      * Checks if the session is authenticated.
      *
-     * @return {@code true} if authenticated, {@code false} otherwise
+     * @return {@code true} if authenticated, {@code false} otherwise.
      */
     boolean isAuthenticated();
 
     /**
      * Computes a new {@link ByteBuf} for this session.
      *
-     * @return the computed {@link ByteBuf}
+     * @return the computed {@link ByteBuf}.
      */
     @NotNull ByteBuffer computeBuffer();
 
@@ -103,9 +118,9 @@ public interface Session {
     /**
      * Sends a {@link ByteBuf} without safety checks, throwing a {@link PacketWritingException} on failure.
      *
-     * @param buffer the {@link ByteBuf} to send
+     * @param buffer the {@link ByteBuf} to send.
      *
-     * @throws PacketWritingException on failure
+     * @throws PacketWritingException on failure.
      */
     default void unsafeSend(final @NotNull ByteBuf buffer) {
         try {
@@ -118,9 +133,9 @@ public interface Session {
     /**
      * Sends a {@link ByteBuffer} through this session's {@link SocketChannel}.
      *
-     * @param buffer the {@link ByteBuffer} to send
+     * @param buffer the {@link ByteBuffer} to send.
      *
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occurs.
      */
     default void send(final @NotNull ByteBuffer buffer) throws IOException {
         send(this.getChannel(), buffer);
@@ -129,9 +144,9 @@ public interface Session {
     /**
      * Sends a {@link ByteBuffer} without safety checks, throwing a {@link PacketWritingException} on failure.
      *
-     * @param buffer the {@link ByteBuffer} to send
+     * @param buffer the {@link ByteBuffer} to send.
      *
-     * @throws PacketWritingException on failure
+     * @throws PacketWritingException on failure.
      */
     default void unsafeSend(final @NotNull ByteBuffer buffer) {
         try {
@@ -144,12 +159,12 @@ public interface Session {
     /**
      * Sends a {@link ByteBuf} through this session's {@link SocketChannel}.
      *
-     * @param buffer the {@link ByteBuf} to send
+     * @param buffer the {@link ByteBuf} to send.
      *
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occurs.
      */
     default void send(final @NotNull ByteBuf buffer) throws IOException {
-        send(this.getChannel(), buffer);
+        sendAndClear(this.getChannel(), buffer);
     }
 
 }

@@ -3,7 +3,6 @@ package be.darkkraft.memorized.client.data;
 import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.exception.SessionNotOpenException;
 import be.darkkraft.memorized.client.exception.UnknownMemorizedClient;
-import be.darkkraft.memorized.net.session.Session;
 import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -68,11 +67,7 @@ public abstract class ClientAccessor {
      * @throws SessionNotOpenException If the session is not open.
      */
     public void write(final @NotNull ByteBuf buffer) {
-        final Session session = this.client().getSession();
-        if (session == null) {
-            throw new SessionNotOpenException();
-        }
-        session.unsafeSend(buffer);
+        this.client().getTransactionQueue().directQueue(buffer);
     }
 
     /**

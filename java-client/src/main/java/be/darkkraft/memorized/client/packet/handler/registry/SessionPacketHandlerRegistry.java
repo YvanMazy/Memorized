@@ -35,7 +35,7 @@ public final class SessionPacketHandlerRegistry extends PacketHandlerRegistry<Se
     public void initialize(final @NotNull MemorizedClient client) {
         this.register(ServerPacket.NOT_AUTHENTICATED, new NotAuthenticatedHandler());
         this.register(ServerPacket.AUTH_FAILED, new AuthenticationFailedHandler());
-        this.register(ServerPacket.AUTH_SUCCESS, new AuthenticationSuccessHandler());
+        this.register(ServerPacket.AUTH_SUCCESS, new AuthenticationSuccessHandler(client));
         this.register(ServerPacket.DISCONNECT, new DisconnectHandler());
         this.register(ServerPacket.RESULT, new ResultHandler(client));
         this.register(ServerPacket.NOT_FOUND, new NotFoundHandler(client));

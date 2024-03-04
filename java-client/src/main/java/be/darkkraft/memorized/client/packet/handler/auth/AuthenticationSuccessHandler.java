@@ -1,5 +1,6 @@
 package be.darkkraft.memorized.client.packet.handler.auth;
 
+import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.packet.handler.SessionPacketHandler;
 import be.darkkraft.memorized.client.session.ServerSession;
 import be.darkkraft.memorized.packet.ServerPacket;
@@ -17,6 +18,12 @@ public final class AuthenticationSuccessHandler extends SessionPacketHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationSuccessHandler.class);
 
+    private final MemorizedClient client;
+
+    public AuthenticationSuccessHandler(final @NotNull MemorizedClient client) {
+        this.client = client;
+    }
+
     /**
      * Handles the incoming {@link ServerPacket#AUTH_SUCCESS} packets by setting the session as authenticated and logging a debug message.
      *
@@ -26,6 +33,7 @@ public final class AuthenticationSuccessHandler extends SessionPacketHandler {
     @Override
     public void handle(final @NotNull ServerSession session, final @NotNull ByteBuffer buffer) {
         session.setAuthenticated(true);
+        this.client.getTransactionQueue().onSessionReady();
         LOGGER.debug("Authentication success.");
     }
 

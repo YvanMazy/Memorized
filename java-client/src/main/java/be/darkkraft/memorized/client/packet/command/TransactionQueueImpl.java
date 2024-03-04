@@ -25,6 +25,7 @@ public class TransactionQueueImpl implements TransactionQueue {
 
     @NotNull
     private final Queue<CompletableFuture<ByteBuffer>> futures = new ConcurrentLinkedQueue<>();
+    private final Queue<ByteBuf> pendingBuffers = new ConcurrentLinkedQueue<>();
 
     @NotNull
     private final MemorizedClient client;
@@ -36,6 +37,13 @@ public class TransactionQueueImpl implements TransactionQueue {
      */
     public TransactionQueueImpl(final @NotNull MemorizedClient client) {
         this.client = client;
+    }
+
+    @Override
+    public void onSessionReady() {
+        while (!this.pendingBuffers.isEmpty()) {
+            this.directQueue(this.pendingBuffers.poll());
+        }
     }
 
     /**
@@ -67,12 +75,23 @@ public class TransactionQueueImpl implements TransactionQueue {
     public CompletableFuture<ByteBuffer> queue(final @NotNull ByteBuf buffer) {
         final CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
         this.futures.add(future);
-        final Session session = this.client.getSession();
-        if (session == null) {
-            throw new SessionNotOpenException();
-        }
-        session.unsafeSend(buffer);
+        this.directQueue(buffer);
         return future;
+    }
+
+    @Override
+    public void directQueue(final @NotNull ByteBuf buffer) {
+        try {
+            final Session session = this.client.getSession();
+            if (session == null) {
+                throw new SessionNotOpenException();
+            }
+            Session.send(session.getChannel(), buffer);
+            buffer.getBuffer().clear();
+        } catch (final Exception exception) {
+            LOGGER.error("Failed to queue a buffer", exception);
+            this.pendingBuffers.add(buffer);
+        }
     }
 
     /**
