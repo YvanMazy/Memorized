@@ -1,10 +1,12 @@
 package be.darkkraft.memorized.client;
 
 import be.darkkraft.memorized.client.auth.AuthenticationInput;
+import be.darkkraft.memorized.client.config.ClientConfiguration;
 import be.darkkraft.memorized.client.net.TransactionQueue;
 import be.darkkraft.memorized.codec.registry.CodecRegistry;
 import be.darkkraft.memorized.data.key.KeyRegistry;
 import be.darkkraft.memorized.net.session.Session;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -95,29 +97,28 @@ public interface MemorizedClient {
     /**
      * Gets the size limit of a received packet.
      *
-     * @param authenticated true if the session is authenticated
+     * @param authenticated true if the session is authenticated.
      *
-     * @return The packet size
+     * @return The packet size.
      */
     @Contract(pure = true)
     default int getPacketSizeLimit(final boolean authenticated) {
-        return authenticated ? this.getPacketSizeLimit() : this.getUnauthenticatedPacketSizeLimit();
+        final ClientConfiguration config = this.getConfiguration();
+        return authenticated ? config.packetSizeLimit() : config.unauthenticatedPacketSizeLimit();
     }
 
     /**
-     * Gets the size limit of a received packet.
+     * Gets the client configuration.
      *
-     * @return The packet size
+     * @return The client configuration.
      */
     @Contract(pure = true)
-    int getPacketSizeLimit();
+    @NotNull ClientConfiguration getConfiguration();
 
     /**
-     * Gets the size limit of a received packet when a session is not authenticated.
-     *
-     * @return The packet size
+     * Starts the automatic reconnection system.
      */
-    @Contract(pure = true)
-    int getUnauthenticatedPacketSizeLimit();
+    @ApiStatus.Internal
+    void tryToReconnect();
 
 }

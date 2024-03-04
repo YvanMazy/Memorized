@@ -209,6 +209,9 @@ public final class ClientChannelThread extends Thread {
             if (this.channel != null) {
                 this.channel.close();
                 this.channel = null;
+                if (this.client.isRunning()) {
+                    this.client.tryToReconnect();
+                }
             }
         } catch (final Exception exception) {
             LOGGER.error("An error occurred during shutdown", exception);

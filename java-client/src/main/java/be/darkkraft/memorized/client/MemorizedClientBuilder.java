@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.client;
 
 import be.darkkraft.memorized.client.auth.AuthenticationInput;
+import be.darkkraft.memorized.client.config.ClientConfiguration;
 import be.darkkraft.memorized.codec.registry.CodecRegistry;
 import be.darkkraft.memorized.data.key.KeyRegistry;
 import org.jetbrains.annotations.Contract;
@@ -19,6 +20,7 @@ public final class MemorizedClientBuilder {
     private AuthenticationInput authenticationInput;
     private CodecRegistry codecRegistry;
     private KeyRegistry<Class<?>> keyRegistry;
+    private ClientConfiguration configuration;
 
     /**
      * Retrieves the server address to be used by the client.
@@ -109,14 +111,39 @@ public final class MemorizedClientBuilder {
     /**
      * Sets the {@link KeyRegistry} for the client.
      *
-     * @param keyRegistry The {@link KeyRegistry} to set for the client. Can be null.
+     * @param keyRegistry The {@link KeyRegistry} to set for the client. Cannot be null.
      *
      * @return This {@link MemorizedClientBuilder} instance.
      */
     @NotNull
     @Contract("_ -> this")
-    public MemorizedClientBuilder keyRegistry(final @Nullable KeyRegistry<Class<?>> keyRegistry) {
-        this.keyRegistry = keyRegistry;
+    public MemorizedClientBuilder keyRegistry(final @NotNull KeyRegistry<Class<?>> keyRegistry) {
+        this.keyRegistry = Objects.requireNonNull(keyRegistry, "Key registry cannot be null");
+        return this;
+    }
+
+    /**
+     * Retrieves the {@link ClientConfiguration} for the client.
+     *
+     * @return The {@link ClientConfiguration}.
+     */
+    @Nullable
+    @Contract(pure = true)
+    public ClientConfiguration configuration() {
+        return this.configuration;
+    }
+
+    /**
+     * Sets the {@link ClientConfiguration} for the client.
+     *
+     * @param configuration The {@link ClientConfiguration} to set for the client.
+     *
+     * @return This {@link MemorizedClientBuilder} instance.
+     */
+    @NotNull
+    @Contract("_ -> this")
+    public MemorizedClientBuilder configuration(final @NotNull ClientConfiguration configuration) {
+        this.configuration = Objects.requireNonNull(configuration, "Configuration cannot be null");
         return this;
     }
 
@@ -128,7 +155,11 @@ public final class MemorizedClientBuilder {
     @NotNull
     @Contract(" -> new")
     public MemorizedClient build() {
-        return new MemorizedClientImpl(this.serverAddress, this.authenticationInput, this.codecRegistry, this.keyRegistry);
+        return new MemorizedClientImpl(this.serverAddress,
+                this.authenticationInput,
+                this.codecRegistry,
+                this.keyRegistry,
+                this.configuration);
     }
 
 }

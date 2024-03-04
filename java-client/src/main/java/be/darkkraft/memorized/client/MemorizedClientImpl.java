@@ -2,8 +2,10 @@ package be.darkkraft.memorized.client;
 
 import be.darkkraft.memorized.client.auth.AuthenticationInput;
 import be.darkkraft.memorized.client.channel.ClientChannelThread;
+import be.darkkraft.memorized.client.config.ClientConfiguration;
 import be.darkkraft.memorized.client.packet.command.TransactionQueueImpl;
 import be.darkkraft.memorized.client.packet.handler.registry.SessionPacketHandlerRegistry;
+import be.darkkraft.memorized.client.retry.ConnectionRetryManager;
 import be.darkkraft.memorized.client.session.ServerSession;
 import be.darkkraft.memorized.codec.registry.CodecRegistry;
 import be.darkkraft.memorized.data.key.KeyRegistry;
@@ -28,6 +30,8 @@ public final class MemorizedClientImpl implements MemorizedClient {
     private final AuthenticationInput authenticationInput;
     private final CodecRegistry codecRegistry;
     private final KeyRegistry<Class<?>> keyRegistry;
+    private final ClientConfiguration configuration;
+    private ConnectionRetryManager connectionRetryManager;
     private ClientChannelThread channelThread;
     private ServerSession session;
     private SessionPacketHandlerRegistry packetHandlerRegistry;
@@ -42,13 +46,15 @@ public final class MemorizedClientImpl implements MemorizedClient {
      * @param authenticationInput The {@link AuthenticationInput} to use.
      * @param codecRegistry       The {@link CodecRegistry} to use.
      * @param keyRegistry         The {@link KeyRegistry} to use.
+     * @param configuration       The {@link ClientConfiguration} to use.
      */
     @Contract(pure = true)
-    public MemorizedClientImpl(final @NotNull InetSocketAddress serverAddress, final @NotNull AuthenticationInput authenticationInput, final @NotNull CodecRegistry codecRegistry, final KeyRegistry<Class<?>> keyRegistry) {
+    public MemorizedClientImpl(final @NotNull InetSocketAddress serverAddress, final @NotNull AuthenticationInput authenticationInput, final @NotNull CodecRegistry codecRegistry, final KeyRegistry<Class<?>> keyRegistry, ClientConfiguration configuration) {
         this.serverAddress = Objects.requireNonNull(serverAddress, "Server address cannot be null");
         this.authenticationInput = Objects.requireNonNull(authenticationInput, "Authentication input cannot be null");
         this.codecRegistry = Objects.requireNonNull(codecRegistry, "Codec registry cannot be null");
         this.keyRegistry = Objects.requireNonNull(keyRegistry, "Key registry cannot be null");
+        this.configuration = Objects.requireNonNull(configuration, "Configuration cannot be null");
     }
 
     /**
@@ -63,6 +69,16 @@ public final class MemorizedClientImpl implements MemorizedClient {
 
         (this.packetHandlerRegistry = new SessionPacketHandlerRegistry()).initialize(this);
         this.transactionQueue = new TransactionQueueImpl(this);
+        this.connectionRetryManager = new ConnectionRetryManager(this);
+        if (this.connect()) {
+            this.tryToReconnect();
+            return;
+        }
+
+        LOGGER.info("MemorizedClient is connected in {}ms!", System.currentTimeMillis() - start);
+    }
+
+    public boolean connect() {
         final CountDownLatch countDown = new CountDownLatch(1);
         (this.channelThread = new ClientChannelThread(this, countDown)).start();
 
@@ -70,14 +86,12 @@ public final class MemorizedClientImpl implements MemorizedClient {
             this.channelThread.awaitConnected();
         } catch (final Exception exception) {
             LOGGER.error("Server are not reachable", exception);
-            this.running = false;
-            return;
+            return true;
         }
 
         this.session = new ServerSession(this.channelThread.getChannel());
         countDown.countDown();
-
-        LOGGER.info("MemorizedClient is connected in {}ms!", System.currentTimeMillis() - start);
+        return false;
     }
 
     /**
@@ -154,26 +168,15 @@ public final class MemorizedClientImpl implements MemorizedClient {
         return this.running;
     }
 
-    /**
-     * Gets the size limit of a received packet.
-     *
-     * @return The packet size
-     */
-    @Contract(pure = true)
+    @NotNull
     @Override
-    public int getPacketSizeLimit() {
-        return 1048576;
+    public ClientConfiguration getConfiguration() {
+        return this.configuration;
     }
 
-    /**
-     * Gets the size limit of a received packet when a session is not authenticated.
-     *
-     * @return The packet size
-     */
-    @Contract(pure = true)
     @Override
-    public int getUnauthenticatedPacketSizeLimit() {
-        return 320;
+    public void tryToReconnect() {
+        this.connectionRetryManager.start();
     }
 
 }
