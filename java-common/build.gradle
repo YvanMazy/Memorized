@@ -4,10 +4,14 @@ plugins {
 
 dependencies {
     // Logging
-    api 'org.slf4j:slf4j-api:2.0.9'
+    api 'org.slf4j:slf4j-api:2.0.12'
+
+    // Collections
+    api 'it.unimi.dsi:fastutil:8.5.13'
 
     // Annotations
-    api 'org.jetbrains:annotations:24.0.1'
+    api 'org.jetbrains:annotations:24.1.0'
+}
 
     // Collections
     api 'it.unimi.dsi:fastutil:8.5.12'
