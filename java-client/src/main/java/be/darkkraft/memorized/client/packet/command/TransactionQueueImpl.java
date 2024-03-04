@@ -1,7 +1,9 @@
 package be.darkkraft.memorized.client.packet.command;
 
 import be.darkkraft.memorized.client.MemorizedClient;
+import be.darkkraft.memorized.client.exception.SessionNotOpenException;
 import be.darkkraft.memorized.client.net.TransactionQueue;
+import be.darkkraft.memorized.net.session.Session;
 import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -57,13 +59,19 @@ public class TransactionQueueImpl implements TransactionQueue {
      * @param buffer The {@link ByteBuf} containing the transaction data.
      *
      * @return A {@link CompletableFuture} representing the future result of the transaction.
+     *
+     * @throws SessionNotOpenException If the session is not open
      */
     @NotNull
     @Override
     public CompletableFuture<ByteBuffer> queue(final @NotNull ByteBuf buffer) {
         final CompletableFuture<ByteBuffer> future = new CompletableFuture<>();
         this.futures.add(future);
-        this.client.getSession().unsafeSend(buffer);
+        final Session session = this.client.getSession();
+        if (session == null) {
+            throw new SessionNotOpenException();
+        }
+        session.unsafeSend(buffer);
         return future;
     }
 

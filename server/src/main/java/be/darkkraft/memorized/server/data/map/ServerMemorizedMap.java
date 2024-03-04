@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Server-side implementation of {@link MemorizedMap}.
  * Provides methods for updating and showing the values based on keys.
  *
- * @param <K> the type of keys maintained by this map
- * @param <V> the type of values maintained by this map
+ * @param <K> the type of keys maintained by this map.
+ * @param <V> the type of values maintained by this map.
  */
 public class ServerMemorizedMap<K, V> implements DataContainer {
 

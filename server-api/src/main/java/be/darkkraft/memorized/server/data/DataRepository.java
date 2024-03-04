@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 /**
  * Interface for managing a data repository.
  *
- * @param <K> The type of key used for identifying data containers
+ * @param <K> The type of key used for identifying data containers.
  *
  * @see DataContainer
  * @see ByteBuffer

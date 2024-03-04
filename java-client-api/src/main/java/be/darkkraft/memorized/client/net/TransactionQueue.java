@@ -1,5 +1,6 @@
 package be.darkkraft.memorized.client.net;
 
+import be.darkkraft.memorized.client.exception.SessionNotOpenException;
 import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +26,8 @@ public interface TransactionQueue {
      * @param buffer The buffer containing the outgoing data.
      *
      * @return A {@link CompletableFuture} representing the result of the transaction.
+     *
+     * @throws SessionNotOpenException If the session is not open
      */
     CompletableFuture<ByteBuffer> queue(@NotNull ByteBuf buffer);
 

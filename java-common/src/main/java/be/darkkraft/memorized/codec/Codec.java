@@ -11,7 +11,7 @@ import java.nio.ByteBuffer;
 /**
  * Interface representing a codec for encoding and decoding objects.
  *
- * @param <T> the type of object this codec handles
+ * @param <T> the type of object this codec handles.
  *
  * @see ByteBuffer
  * @see CodecRegistry

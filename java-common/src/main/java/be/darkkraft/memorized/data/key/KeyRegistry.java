@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Interface for a registry that holds mappings between keys and their corresponding identifiers.
  *
- * @param <K> the type of key this registry handles
+ * @param <K> the type of key this registry handles.
  */
 public interface KeyRegistry<K> {
 

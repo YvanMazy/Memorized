@@ -1,6 +1,7 @@
 package be.darkkraft.memorized.client.data;
 
 import be.darkkraft.memorized.client.MemorizedClient;
+import be.darkkraft.memorized.client.exception.UnknownMemorizedClient;
 import be.darkkraft.memorized.packet.ByteBuf;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +37,8 @@ public abstract class IdentifiableClientAccessor extends ClientAccessor {
      * @param buffer The buffer into which the identifier should be written.
      *
      * @return The modified {@link ByteBuffer} containing the identifier.
+     *
+     * @throws UnknownMemorizedClient If the client is not defined.
      */
     @NotNull
     protected ByteBuf writeId(final @NotNull ByteBuf buffer) {

@@ -2,6 +2,8 @@ package be.darkkraft.memorized.client.data.map;
 
 import be.darkkraft.memorized.client.MemorizedClient;
 import be.darkkraft.memorized.client.data.IdentifiableClientAccessor;
+import be.darkkraft.memorized.client.exception.SessionNotOpenException;
+import be.darkkraft.memorized.client.exception.UnknownMemorizedClient;
 import be.darkkraft.memorized.data.map.MapUpdate;
 import be.darkkraft.memorized.data.map.MemorizedMap;
 import be.darkkraft.memorized.packet.ByteBuf;
@@ -46,6 +48,9 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      * @param key The key whose associated value is to be returned.
      *
      * @return A {@link CompletableFuture} containing the value to which the specified key is mapped, or null if the map contains no mapping for the key.
+     *
+     * @throws UnknownMemorizedClient  If the client is not defined.
+     * @throws SessionNotOpenException If the session is not open.
      */
     @Override
     @NotNull
@@ -60,6 +65,9 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      *
      * @param key   The key with which the specified value is to be associated.
      * @param value The value to be associated with the specified key.
+     *
+     * @throws UnknownMemorizedClient  If the client is not defined.
+     * @throws SessionNotOpenException If the session is not open.
      */
     @Override
     public void put(final @NotNull K key, final V value) {
@@ -73,6 +81,9 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      * Removes the mapping for a key from this map if it is present.
      *
      * @param key The key whose mapping is to be removed from the map.
+     *
+     * @throws UnknownMemorizedClient  If the client is not defined.
+     * @throws SessionNotOpenException If the session is not open.
      */
     @Override
     public void remove(final @NotNull K key) {
