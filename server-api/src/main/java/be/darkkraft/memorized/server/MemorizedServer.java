@@ -48,7 +48,9 @@ public interface MemorizedServer {
      *
      * @param client The client's {@link SocketChannel}.
      * @param buffer The {@link ByteBuffer} containing the packet data.
+     *
      * @return {@code true} if the packet was handled successfully, {@code false} otherwise.
+     *
      * @throws IOException If an I/O error occurs.
      */
     boolean handlePacket(final @NotNull SocketChannel client, final @NotNull ByteBuffer buffer) throws IOException;
@@ -57,6 +59,7 @@ public interface MemorizedServer {
      * Retrieves the {@link Session} associated with a socket channel.
      *
      * @param channel The {@link SocketChannel} to look up.
+     *
      * @return The associated {@link Session}.
      */
     @Contract(pure = true)

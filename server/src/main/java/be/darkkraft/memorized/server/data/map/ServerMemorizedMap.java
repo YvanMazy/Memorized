@@ -40,8 +40,8 @@ public class ServerMemorizedMap<K, V> implements DataContainer {
     /**
      * Constructs a new {@link ServerMemorizedMap} with the given server instance and key-value classes.
      *
-     * @param server    The server instance that provides the codec registry.
-     * @param keyClass  The class type of the keys.
+     * @param server     The server instance that provides the codec registry.
+     * @param keyClass   The class type of the keys.
      * @param valueClass The class type of the values.
      */
     @Contract(pure = true)

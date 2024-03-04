@@ -44,8 +44,7 @@ public final class MemorizedClientImpl implements MemorizedClient {
      * @param keyRegistry         The {@link KeyRegistry} to use.
      */
     @Contract(pure = true)
-    public MemorizedClientImpl(final @NotNull InetSocketAddress serverAddress, final @NotNull AuthenticationInput authenticationInput,
-                               final @NotNull CodecRegistry codecRegistry, final KeyRegistry<Class<?>> keyRegistry) {
+    public MemorizedClientImpl(final @NotNull InetSocketAddress serverAddress, final @NotNull AuthenticationInput authenticationInput, final @NotNull CodecRegistry codecRegistry, final KeyRegistry<Class<?>> keyRegistry) {
         this.serverAddress = Objects.requireNonNull(serverAddress, "Server address cannot be null");
         this.authenticationInput = Objects.requireNonNull(authenticationInput, "Authentication input cannot be null");
         this.codecRegistry = Objects.requireNonNull(codecRegistry, "Codec registry cannot be null");
@@ -86,7 +85,9 @@ public final class MemorizedClientImpl implements MemorizedClient {
      */
     @Override
     public void shutdown() {
-        if (!this.running) return;
+        if (!this.running) {
+            return;
+        }
 
         LOGGER.info("Shutting down MemorizedClient...");
         final long start = System.currentTimeMillis();

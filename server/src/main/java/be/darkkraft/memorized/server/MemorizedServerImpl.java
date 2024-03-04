@@ -46,14 +46,12 @@ public final class MemorizedServerImpl implements MemorizedServer {
     /**
      * Creates a new instance of MemorizedServerImpl.
      *
-     * @param address          The {@link InetSocketAddress} to bind to.
-     * @param authenticator    The {@link Authenticator} to use.
-     * @param codecRegistry    The {@link CodecRegistry} to use.
-     * @param workerThreads    The worker threads amount
+     * @param address       The {@link InetSocketAddress} to bind to.
+     * @param authenticator The {@link Authenticator} to use.
+     * @param codecRegistry The {@link CodecRegistry} to use.
+     * @param workerThreads The worker threads amount
      */
-    public MemorizedServerImpl(final @NotNull InetSocketAddress address, final @NotNull Authenticator authenticator,
-                               final @NotNull CodecRegistry codecRegistry,
-                               final @NotNull DataRepositoryCoordinator dataRepositoryCoordinator, final int workerThreads) {
+    public MemorizedServerImpl(final @NotNull InetSocketAddress address, final @NotNull Authenticator authenticator, final @NotNull CodecRegistry codecRegistry, final @NotNull DataRepositoryCoordinator dataRepositoryCoordinator, final int workerThreads) {
         this.address = Objects.requireNonNull(address, "Address cannot be null");
         this.authenticator = Objects.requireNonNull(authenticator, "Authenticator cannot be null");
         this.codecRegistry = Objects.requireNonNull(codecRegistry, "Codec registry cannot be null");
@@ -91,7 +89,9 @@ public final class MemorizedServerImpl implements MemorizedServer {
      */
     @Override
     public void shutdown() {
-        if (!this.running) return;
+        if (!this.running) {
+            return;
+        }
 
         LOGGER.info("Shutting down MemorizedServer...");
         final long start = System.currentTimeMillis();
@@ -139,7 +139,9 @@ public final class MemorizedServerImpl implements MemorizedServer {
      *
      * @param client The client's socket channel.
      * @param buffer The packet buffer.
+     *
      * @return True if the packet was handled successfully, false otherwise.
+     *
      * @throws IOException If an I/O error occurs.
      */
     @Override
@@ -172,6 +174,7 @@ public final class MemorizedServerImpl implements MemorizedServer {
      * Gets a session based on its {@link SocketChannel}.
      *
      * @param channel The {@link SocketChannel} associated with the session.
+     *
      * @return The {@link Session} or null if the session does not exist.
      */
     @Override

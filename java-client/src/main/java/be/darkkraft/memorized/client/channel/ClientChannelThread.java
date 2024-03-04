@@ -68,7 +68,8 @@ public final class ClientChannelThread extends Thread {
             this.connectLock.await();
 
             final ByteBuf buffer = new ByteBuf().put(ClientPacket.AUTH.getId());
-            this.client.getAuthenticationInput().write(buffer);
+            this.client.getAuthenticationInput()
+                    .write(buffer);
 
             Session.send(socketChannel, buffer);
 
@@ -94,9 +95,13 @@ public final class ClientChannelThread extends Thread {
     private void selectKey(final @NotNull Selector selector) {
         try {
             final int select = selector.select();
-            if (select == 0) return;
+            if (select == 0) {
+                return;
+            }
             final Set<SelectionKey> keys = selector.selectedKeys();
-            if (keys.isEmpty()) return;
+            if (keys.isEmpty()) {
+                return;
+            }
             final Iterator<SelectionKey> iterator = keys.iterator();
 
             while (iterator.hasNext()) {
@@ -112,10 +117,8 @@ public final class ClientChannelThread extends Thread {
      * Handles an individual {@link SelectionKey}, taking appropriate actions based on its state.
      *
      * @param key The {@link SelectionKey} to be processed.
-     *
-     * @throws Exception Any exception that may occur during the key handling.
      */
-    private void handle(final @NotNull SelectionKey key) throws Exception {
+    private void handle(final @NotNull SelectionKey key) {
         try {
             if (key.isReadable()) {
                 final Session session = this.client.getSession();

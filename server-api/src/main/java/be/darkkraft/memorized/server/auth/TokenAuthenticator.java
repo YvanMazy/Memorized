@@ -1,8 +1,6 @@
 package be.darkkraft.memorized.server.auth;
 
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -13,8 +11,6 @@ import java.util.Objects;
  * An implementation of the {@link Authenticator} interface for token-based authentication.
  */
 public final class TokenAuthenticator implements Authenticator {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(TokenAuthenticator.class);
 
     private final byte[] token;
 

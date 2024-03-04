@@ -23,6 +23,7 @@ public interface TransactionQueue {
      * Queues a transaction to be sent to the server.
      *
      * @param buffer The buffer containing the outgoing data.
+     *
      * @return A {@link CompletableFuture} representing the result of the transaction.
      */
     CompletableFuture<ByteBuffer> queue(@NotNull ByteBuf buffer);

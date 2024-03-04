@@ -22,14 +22,14 @@ public abstract class ClientAccessor {
      *
      * @param client The {@link MemorizedClient} associated with this accessor.
      */
-    public ClientAccessor(final @NotNull MemorizedClient client) {
+    protected ClientAccessor(final @NotNull MemorizedClient client) {
         this.client = client;
     }
 
     /**
      * Default constructor for ClientAccessor.
      */
-    public ClientAccessor() {
+    protected ClientAccessor() {
         // Default constructor
     }
 
@@ -46,6 +46,7 @@ public abstract class ClientAccessor {
      * Queues a transaction to the client's transaction queue.
      *
      * @param buffer The {@link ByteBuf} containing the data for the transaction.
+     *
      * @return A {@link CompletableFuture} representing the result of the transaction.
      */
     @NotNull
@@ -66,6 +67,7 @@ public abstract class ClientAccessor {
      * Retrieves the key identifier for a given class from the client's key registry.
      *
      * @param keyClass The class for which to retrieve the key identifier.
+     *
      * @return The key identifier.
      */
     protected int getKeyIdentifier(final @NotNull Class<?> keyClass) {
@@ -76,6 +78,7 @@ public abstract class ClientAccessor {
      * Gets the client associated with this accessor.
      *
      * @return The {@link MemorizedClient} associated with this accessor.
+     *
      * @throws UnknownMemorizedClient If the client is null.
      */
     @Contract(pure = true)

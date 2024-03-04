@@ -18,6 +18,7 @@ public enum MapUpdate {
      * Converts a byte ID to its corresponding {@link MapUpdate} enum value.
      *
      * @param id the byte ID
+     *
      * @return the corresponding {@link MapUpdate} value or {@code null} if no match is found
      */
     @Contract(pure = true)

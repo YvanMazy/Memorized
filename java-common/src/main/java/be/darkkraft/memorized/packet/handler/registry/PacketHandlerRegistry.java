@@ -43,6 +43,7 @@ public abstract class PacketHandlerRegistry<E extends Enum<E>, I, T extends Sess
      * Retrieves a {@link PacketHandler} based on the command.
      *
      * @param command The command to search for
+     *
      * @return The packet handler for the command, or {@code null} if not found
      */
     @Contract(pure = true)

@@ -27,6 +27,7 @@ public final class DataRepositoryCoordinator {
      * Registers a {@link DataRepository} with the coordinator.
      *
      * @param repository The {@link DataRepository} to register.
+     *
      * @return This {@link DataRepositoryCoordinator} instance.
      */
     @Contract("_ -> this")
@@ -41,6 +42,7 @@ public final class DataRepositoryCoordinator {
      * Retrieves a {@link DataRepository} based on its identifier.
      *
      * @param repositoryIdentifier The identifier of the repository.
+     *
      * @return The {@link DataRepository} corresponding to the identifier, or {@code null} if not found.
      */
     @Nullable
@@ -53,6 +55,7 @@ public final class DataRepositoryCoordinator {
      * Retrieves a {@link DataRepository} based on its class.
      *
      * @param clazz The {@link Class} object representing the type of key used in the repository.
+     *
      * @return The {@link DataRepository} corresponding to the class, or {@code null} if not found.
      */
     @Nullable
@@ -65,6 +68,7 @@ public final class DataRepositoryCoordinator {
      * Retrieves the key identifier for a given class.
      *
      * @param clazz The {@link Class} object representing the type of key used in the repository.
+     *
      * @return The key identifier.
      */
     @Contract(pure = true)

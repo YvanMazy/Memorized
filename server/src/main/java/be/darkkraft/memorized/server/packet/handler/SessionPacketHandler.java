@@ -15,7 +15,7 @@ public abstract class SessionPacketHandler implements PacketHandler<ClientSessio
      * @see PacketHandler
      * @see ClientSession
      */
-    public SessionPacketHandler() {
+    protected SessionPacketHandler() {
         // Intentionally left blank for subclass implementation.
     }
 

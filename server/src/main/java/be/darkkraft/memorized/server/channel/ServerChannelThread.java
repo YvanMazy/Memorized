@@ -6,9 +6,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketOptions;
-import java.nio.channels.*;
+import java.nio.channels.ClosedChannelException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CyclicBarrier;
@@ -115,7 +118,7 @@ public final class ServerChannelThread extends Thread {
         }
     }
 
-    private void handleClient(final @NotNull SocketChannel client) throws Exception {
+    private void handleClient(final @NotNull SocketChannel client) throws IOException {
         client.configureBlocking(false);
         this.server.handleNewSession(client);
 

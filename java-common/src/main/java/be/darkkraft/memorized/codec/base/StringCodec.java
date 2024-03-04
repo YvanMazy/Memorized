@@ -35,6 +35,7 @@ public class StringCodec implements Codec<String> {
      *
      * @param registry the {@link CodecRegistry} containing available codecs
      * @param buffer   the source {@link ByteBuffer}
+     *
      * @return the decoded {@link String} value
      */
     @Override

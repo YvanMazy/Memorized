@@ -34,6 +34,7 @@ public class IntCodec implements Codec<Integer> {
      *
      * @param registry the {@link CodecRegistry} containing available codecs
      * @param buffer   the source {@link ByteBuffer}
+     *
      * @return the decoded {@link Integer} value
      */
     @Override

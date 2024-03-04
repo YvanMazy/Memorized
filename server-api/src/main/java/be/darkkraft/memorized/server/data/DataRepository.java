@@ -21,6 +21,7 @@ public interface DataRepository<K> {
      * Retrieves a {@link DataContainer} associated with the specified key.
      *
      * @param key The key used to look up the container.
+     *
      * @return The {@link DataContainer} associated with the key.
      */
     DataContainer getContainer(final @NotNull K key);
@@ -29,6 +30,7 @@ public interface DataRepository<K> {
      * Reads a key from a {@link ByteBuffer}.
      *
      * @param buffer The {@link ByteBuffer} to read from.
+     *
      * @return The key read from the buffer.
      */
     @Nullable K readKey(final @NotNull ByteBuffer buffer);

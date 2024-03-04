@@ -23,6 +23,7 @@ public interface Codec<T> {
      *
      * @param buffer the target {@link ByteBuffer}
      * @param string the {@link String} to write
+     *
      * @return the modified {@link ByteBuffer}
      */
     @Contract("_, _ -> param1")
@@ -37,6 +38,7 @@ public interface Codec<T> {
      * Reads a {@link String} from a {@link ByteBuffer}.
      *
      * @param buffer the source {@link ByteBuffer}
+     *
      * @return the extracted {@link String}
      */
     @Contract("_ -> new")
@@ -62,6 +64,7 @@ public interface Codec<T> {
      *
      * @param registry the CodecRegistry containing available codecs
      * @param buffer   the source {@link ByteBuffer}
+     *
      * @return the decoded object
      */
     @Nullable T decode(final @NotNull CodecRegistry registry, final @NotNull ByteBuffer buffer);

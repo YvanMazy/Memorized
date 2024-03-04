@@ -26,7 +26,7 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      * @param client     The {@link MemorizedClient} associated with this map.
      * @param valueClass The class type of the values.
      */
-    public ClientMemorizedMap(final @NotNull MemorizedClient client, final @NotNull Class<V> valueClass) {
+    protected ClientMemorizedMap(final @NotNull MemorizedClient client, final @NotNull Class<V> valueClass) {
         super(client);
         this.valueClass = valueClass;
     }
@@ -36,7 +36,7 @@ public abstract class ClientMemorizedMap<K, V> extends IdentifiableClientAccesso
      *
      * @param valueClass The class type of the values.
      */
-    public ClientMemorizedMap(final @NotNull Class<V> valueClass) {
+    protected ClientMemorizedMap(final @NotNull Class<V> valueClass) {
         this.valueClass = valueClass;
     }
 

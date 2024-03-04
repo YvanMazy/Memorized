@@ -36,6 +36,7 @@ public final class MemorizedServerBuilder {
      * Sets the address for the server.
      *
      * @param address the address for the server. Cannot be null.
+     *
      * @return this builder instance.
      */
     @NotNull
@@ -59,6 +60,7 @@ public final class MemorizedServerBuilder {
      * Sets the {@link Authenticator} for the server.
      *
      * @param authenticator the authenticator for the server. Cannot be null.
+     *
      * @return this builder instance.
      */
     @NotNull
@@ -82,6 +84,7 @@ public final class MemorizedServerBuilder {
      * Sets the codec registry for the server.
      *
      * @param codecRegistry the codec registry for the server. Cannot be null.
+     *
      * @return this builder instance.
      */
     @NotNull
@@ -105,6 +108,7 @@ public final class MemorizedServerBuilder {
      * Sets the {@link DataRepositoryCoordinator} for the server.
      *
      * @param dataRepositoryCoordinator the DataRepositoryCoordinator for the server. Cannot be null.
+     *
      * @return this builder instance.
      */
     @NotNull
@@ -128,6 +132,7 @@ public final class MemorizedServerBuilder {
      * Sets the number of worker threads for the server.
      *
      * @param workerThreads the number of worker threads.
+     *
      * @return this builder instance.
      */
     @NotNull

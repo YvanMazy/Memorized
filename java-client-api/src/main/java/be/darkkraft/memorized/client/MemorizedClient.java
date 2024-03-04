@@ -31,7 +31,9 @@ public interface MemorizedClient {
      * Handles an incoming packet from the server.
      *
      * @param buffer The packet data encapsulated in a {@link ByteBuffer}.
+     *
      * @return True if the packet was successfully handled, false otherwise.
+     *
      * @throws IOException If an I/O exception occurs while handling the packet.
      */
     boolean handlePacket(@NotNull ByteBuffer buffer) throws IOException;

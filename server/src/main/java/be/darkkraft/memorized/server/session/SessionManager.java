@@ -45,6 +45,7 @@ public class SessionManager {
      * Retrieves the {@link ClientSession} object associated with a given socket channel.
      *
      * @param client The socket channel representing the client session.
+     *
      * @return The {@link ClientSession} object, or null if the session does not exist.
      */
     public @Nullable ClientSession getSession(final SocketChannel client) {

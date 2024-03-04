@@ -19,14 +19,14 @@ public abstract class IdentifiableClientAccessor extends ClientAccessor {
      *
      * @param client The {@link MemorizedClient} associated with this accessor.
      */
-    public IdentifiableClientAccessor(final @NotNull MemorizedClient client) {
+    protected IdentifiableClientAccessor(final @NotNull MemorizedClient client) {
         super(client);
     }
 
     /**
      * Default constructor for IdentifiableClientAccessor.
      */
-    public IdentifiableClientAccessor() {
+    protected IdentifiableClientAccessor() {
         // Default constructor
     }
 
@@ -34,6 +34,7 @@ public abstract class IdentifiableClientAccessor extends ClientAccessor {
      * Writes the identifier to the given {@link ByteBuffer}.
      *
      * @param buffer The buffer into which the identifier should be written.
+     *
      * @return The modified {@link ByteBuffer} containing the identifier.
      */
     @NotNull

@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
  * Sealed abstract class for handlers that interact with data repositories.
  * Permitted subclasses are {@link ShowHandler} and {@link UpdateHandler}.
  */
-public sealed abstract class InteractHandler extends SessionPacketHandler permits ShowHandler, UpdateHandler {
+public abstract sealed class InteractHandler extends SessionPacketHandler permits ShowHandler, UpdateHandler {
 
     @NotNull
     private final MemorizedServer server;
@@ -26,7 +26,7 @@ public sealed abstract class InteractHandler extends SessionPacketHandler permit
      * @param server The server instance that provides data repository coordination.
      */
     @Contract(pure = true)
-    public InteractHandler(final @NotNull MemorizedServer server) {
+    protected InteractHandler(final @NotNull MemorizedServer server) {
         this.server = server;
     }
 
@@ -57,7 +57,6 @@ public sealed abstract class InteractHandler extends SessionPacketHandler permit
      * @param buffer    The packet buffer containing data.
      * @param container The found data container.
      */
-    protected abstract void handle(final @NotNull ClientSession session, final @NotNull ByteBuffer buffer,
-                                   final @NotNull DataContainer container);
+    protected abstract void handle(final @NotNull ClientSession session, final @NotNull ByteBuffer buffer, final @NotNull DataContainer container);
 
 }

@@ -34,7 +34,7 @@ public final class StringDataRepository implements DataRepository<String> {
     /**
      * Registers a data container with the given key.
      *
-     * @param key      The key to associate with the data container.
+     * @param key       The key to associate with the data container.
      * @param container The data container to register.
      */
     public void register(final @NotNull String key, final @NotNull DataContainer container) {
@@ -45,6 +45,7 @@ public final class StringDataRepository implements DataRepository<String> {
      * Retrieves the data container associated with the given key.
      *
      * @param key The key whose associated data container is to be returned.
+     *
      * @return The data container associated with the specified key, or {@code null} if no container is found.
      */
     @Override
@@ -56,6 +57,7 @@ public final class StringDataRepository implements DataRepository<String> {
      * Reads and returns the key from the given buffer.
      *
      * @param buffer The buffer from which to read the key.
+     *
      * @return The key, or {@code null} if the key cannot be decoded.
      */
     @Override

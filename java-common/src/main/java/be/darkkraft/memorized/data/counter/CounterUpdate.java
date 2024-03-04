@@ -23,6 +23,7 @@ public enum CounterUpdate {
      * Converts a byte ID to its corresponding {@link CounterUpdate} enum value.
      *
      * @param id the byte ID
+     *
      * @return the corresponding {@link CounterUpdate} value or {@code null} if no match is found
      */
     @Contract(pure = true)

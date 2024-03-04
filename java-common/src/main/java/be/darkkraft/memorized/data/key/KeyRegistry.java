@@ -16,6 +16,7 @@ public interface KeyRegistry<K> {
      *
      * @param key        the key to register
      * @param identifier the identifier for the key
+     *
      * @return this {@link KeyRegistry}
      */
     @Contract("_, _ -> this")
@@ -25,6 +26,7 @@ public interface KeyRegistry<K> {
      * Retrieves the key corresponding to an identifier.
      *
      * @param identifier the identifier for the key
+     *
      * @return the key corresponding to the identifier, or {@code null} if not found
      */
     @Nullable K getClassFromIdentifier(final int identifier);
@@ -33,6 +35,7 @@ public interface KeyRegistry<K> {
      * Retrieves the identifier corresponding to a key.
      *
      * @param key the key for which to get the identifier
+     *
      * @return the identifier corresponding to the key
      */
     int getIdentifierFromClass(final @NotNull K key);

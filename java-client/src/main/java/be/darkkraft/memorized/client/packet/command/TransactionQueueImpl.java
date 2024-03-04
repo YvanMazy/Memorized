@@ -55,6 +55,7 @@ public class TransactionQueueImpl implements TransactionQueue {
      * Queues a new transaction into the transaction queue.
      *
      * @param buffer The {@link ByteBuf} containing the transaction data.
+     *
      * @return A {@link CompletableFuture} representing the future result of the transaction.
      */
     @NotNull

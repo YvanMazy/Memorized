@@ -35,6 +35,7 @@ public final class MemorizedClientBuilder {
      * Sets the server address for the client.
      *
      * @param serverAddress The {@link InetSocketAddress} representing the server address. Cannot be null.
+     *
      * @return This {@link MemorizedClientBuilder} instance.
      */
     @NotNull
@@ -59,6 +60,7 @@ public final class MemorizedClientBuilder {
      * Sets the authentication input for the client.
      *
      * @param authenticationInput The {@link AuthenticationInput} to set for authentication. Cannot be null.
+     *
      * @return This {@link MemorizedClientBuilder} instance.
      */
     @NotNull
@@ -83,6 +85,7 @@ public final class MemorizedClientBuilder {
      * Sets the {@link CodecRegistry} for the client.
      *
      * @param codecRegistry The {@link CodecRegistry} to set for the client. Cannot be null.
+     *
      * @return This {@link MemorizedClientBuilder} instance.
      */
     @NotNull
@@ -107,6 +110,7 @@ public final class MemorizedClientBuilder {
      * Sets the {@link KeyRegistry} for the client.
      *
      * @param keyRegistry The {@link KeyRegistry} to set for the client. Can be null.
+     *
      * @return This {@link MemorizedClientBuilder} instance.
      */
     @NotNull

@@ -34,6 +34,7 @@ public final class AuthenticationHandler extends SessionPacketHandler {
      *
      * @param session The client session to be authenticated.
      * @param buffer  The packet buffer containing the authentication data.
+     *
      * @throws IOException If an I/O error occurs while reading from the channel.
      */
     @Override

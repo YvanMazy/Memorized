@@ -30,9 +30,11 @@ public class BasicKeyRegistry<K> implements KeyRegistry<K> {
     /**
      * Registers a new key with the specified identifier.
      *
-     * @param key       The key to be registered.
+     * @param key        The key to be registered.
      * @param identifier The identifier for the key.
+     *
      * @return The {@link BasicKeyRegistry} instance for chaining.
+     *
      * @throws IllegalArgumentException if the identifier is negative.
      */
     @Override
@@ -50,6 +52,7 @@ public class BasicKeyRegistry<K> implements KeyRegistry<K> {
      * Retrieves the class associated with the given identifier.
      *
      * @param identifier The identifier of the class to retrieve.
+     *
      * @return The class associated with the identifier.
      */
     @Override
@@ -61,7 +64,9 @@ public class BasicKeyRegistry<K> implements KeyRegistry<K> {
      * Retrieves the identifier associated with the given class.
      *
      * @param key The class whose identifier is to be retrieved.
+     *
      * @return The identifier associated with the class.
+     *
      * @throws KeyNotFoundException if the key is not found in the registry.
      */
     @Override

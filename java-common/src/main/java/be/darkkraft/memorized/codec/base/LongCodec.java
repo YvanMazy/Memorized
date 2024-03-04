@@ -33,6 +33,7 @@ public class LongCodec implements Codec<Long> {
      *
      * @param registry the {@link CodecRegistry} containing available codecs
      * @param buffer   the source {@link ByteBuffer}
+     *
      * @return the decoded {@link Long} value
      */
     @Override

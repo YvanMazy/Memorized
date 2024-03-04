@@ -19,6 +19,7 @@ public interface MemorizedMap<K, V> {
      * Retrieves a value associated with a key in a blocking manner.
      *
      * @param key the key to search for
+     *
      * @return the value associated with the key
      */
     default V blockingGet(final @NotNull K key) {
@@ -29,6 +30,7 @@ public interface MemorizedMap<K, V> {
      * Retrieves a value associated with a key asynchronously.
      *
      * @param key the key to search for
+     *
      * @return a {@link CompletableFuture} that will be completed with the value associated with the key
      */
     @NotNull CompletableFuture<V> asyncGet(final @NotNull K key);

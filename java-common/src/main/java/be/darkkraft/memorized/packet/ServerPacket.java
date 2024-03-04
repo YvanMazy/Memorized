@@ -22,6 +22,7 @@ public enum ServerPacket {
      * Returns a {@link ServerPacket} based on the provided ID.
      *
      * @param id The ID to look up.
+     *
      * @return The corresponding {@link ServerPacket}, or {@code null} if not found.
      */
     @Contract(pure = true)

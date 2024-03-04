@@ -28,9 +28,10 @@ public final class ChannelWorkerThread extends Thread {
     /**
      * Constructs a new worker thread.
      *
-     * @param server The server this worker is part of.
+     * @param server  The server this worker is part of.
      * @param barrier A barrier for synchronization.
-     * @param id The unique ID of this worker thread.
+     * @param id      The unique ID of this worker thread.
+     *
      * @throws IOException if an I/O error occurs.
      */
     public ChannelWorkerThread(final MemorizedServer server, final CyclicBarrier barrier, final int id) throws IOException {
@@ -63,9 +64,13 @@ public final class ChannelWorkerThread extends Thread {
     private void selectKey() {
         try {
             final int select = this.selector.select();
-            if (select == 0) return;
+            if (select == 0) {
+                return;
+            }
             final Set<SelectionKey> keys = this.selector.selectedKeys();
-            if (keys.isEmpty()) return;
+            if (keys.isEmpty()) {
+                return;
+            }
             final Iterator<SelectionKey> iterator = keys.iterator();
             while (iterator.hasNext()) {
                 this.handle(iterator.next());
@@ -80,10 +85,13 @@ public final class ChannelWorkerThread extends Thread {
      * Handles a single key by reading from the channel and passing the message to the session.
      *
      * @param key The selection key to handle.
+     *
      * @throws IOException if an I/O error occurs.
      */
     private void handle(final SelectionKey key) throws IOException {
-        if (!key.isReadable()) return;
+        if (!key.isReadable()) {
+            return;
+        }
         try {
             final SocketChannel client = (SocketChannel) key.channel();
             final Session session = this.server.getSession(client);
@@ -124,6 +132,7 @@ public final class ChannelWorkerThread extends Thread {
      * @param client  The client SocketChannel.
      * @param buffer  The ByteBuffer containing the read data.
      * @param session The session associated with the client.
+     *
      * @throws IOException if an I/O error occurs.
      */
     private void read(final SocketChannel client, ByteBuffer buffer, final Session session) throws IOException {

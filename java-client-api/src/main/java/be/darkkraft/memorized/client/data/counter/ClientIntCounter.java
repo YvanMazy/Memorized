@@ -22,14 +22,14 @@ public abstract class ClientIntCounter extends IdentifiableClientAccessor implem
      *
      * @param client The {@link MemorizedClient} associated with this counter.
      */
-    public ClientIntCounter(final MemorizedClient client) {
+    protected ClientIntCounter(final MemorizedClient client) {
         super(client);
     }
 
     /**
      * Default constructor for {@link ClientIntCounter}.
      */
-    public ClientIntCounter() {
+    protected ClientIntCounter() {
         // Default constructor
     }
 
