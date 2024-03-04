@@ -130,7 +130,7 @@ public final class ChannelWorkerThread extends Thread {
         if (buffer.position() >= 4 && buffer.limit() == 4) {
             buffer.flip();
             final int size = buffer.getInt();
-            final int limit = session.isAuthenticated() ? 1048576 : 320;
+            final int limit = this.server.getPacketSizeLimit(session.isAuthenticated());
             if (size > limit) {
                 LOGGER.warn("Failed to handle packet from server. Packet is too big {}/{}", size, limit);
                 client.close();

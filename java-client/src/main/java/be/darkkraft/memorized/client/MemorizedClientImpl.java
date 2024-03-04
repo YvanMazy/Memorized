@@ -153,4 +153,26 @@ public final class MemorizedClientImpl implements MemorizedClient {
         return this.running;
     }
 
+    /**
+     * Gets the size limit of a received packet.
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    @Override
+    public int getPacketSizeLimit() {
+        return 1048576;
+    }
+
+    /**
+     * Gets the size limit of a received packet when a session is not authenticated.
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    @Override
+    public int getUnauthenticatedPacketSizeLimit() {
+        return 320;
+    }
+
 }

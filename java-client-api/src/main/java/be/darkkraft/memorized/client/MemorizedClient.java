@@ -90,4 +90,32 @@ public interface MemorizedClient {
     @Contract(pure = true)
     boolean isRunning();
 
+    /**
+     * Gets the size limit of a received packet.
+     *
+     * @param authenticated true if the session is authenticated
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    default int getPacketSizeLimit(final boolean authenticated) {
+        return authenticated ? this.getPacketSizeLimit() : this.getUnauthenticatedPacketSizeLimit();
+    }
+
+    /**
+     * Gets the size limit of a received packet.
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    int getPacketSizeLimit();
+
+    /**
+     * Gets the size limit of a received packet when a session is not authenticated.
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    int getUnauthenticatedPacketSizeLimit();
+
 }

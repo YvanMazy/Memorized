@@ -237,6 +237,7 @@ public final class MemorizedServerImpl implements MemorizedServer {
      *
      * @return The number of worker threads.
      */
+    @Contract(pure = true)
     @Override
     public int getWorkerThreads() {
         return this.workerThreads;
@@ -251,6 +252,28 @@ public final class MemorizedServerImpl implements MemorizedServer {
     @Override
     public boolean isRunning() {
         return this.running;
+    }
+
+    /**
+     * Gets the size limit of a received packet.
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    @Override
+    public int getPacketSizeLimit() {
+        return 1048576;
+    }
+
+    /**
+     * Gets the size limit of a received packet when a session is not authenticated.
+     *
+     * @return The packet size
+     */
+    @Contract(pure = true)
+    @Override
+    public int getUnauthenticatedPacketSizeLimit() {
+        return 320;
     }
 
 }
