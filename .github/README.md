@@ -9,12 +9,12 @@ the future.
 
 ## 📝 Summary
 
-* [Goal of Memorized server](https://github.com/Darkkraft/Memorized#-goal-of-memorized-server)
-* [When to use?](https://github.com/Darkkraft/Memorized#-when-to-use)
-* [Features](https://github.com/Darkkraft/Memorized#-features)
-* [How to use?](https://github.com/Darkkraft/Memorized#%EF%B8%8F-how-to-use)
-* [Examples](https://github.com/Darkkraft/Memorized#%EF%B8%8F-examples)
-* [Requirements](https://github.com/Darkkraft/Memorized#%EF%B8%8F-requirements)
+* [Goal of Memorized server](https://github.com/YvanMazy/Memorized#-goal-of-memorized-server)
+* [When to use?](https://github.com/YvanMazy/Memorized#-when-to-use)
+* [Features](https://github.com/YvanMazy/Memorized#-features)
+* [How to use?](https://github.com/YvanMazy/Memorized#%EF%B8%8F-how-to-use)
+* [Examples](https://github.com/YvanMazy/Memorized#%EF%B8%8F-examples)
+* [Requirements](https://github.com/YvanMazy/Memorized#%EF%B8%8F-requirements)
 
 ## ❓ Goal of Memorized server
 
@@ -54,7 +54,7 @@ This section is not available yet. It will be divided into several sections in t
 ## ✍️ Examples
 
 See full
-examples [here](https://github.com/Darkkraft/Memorized/tree/master/examples/src/main/java/be/darkkraft/memorized/example).
+examples [here](https://github.com/YvanMazy/Memorized/tree/master/examples/src/main/java/be/darkkraft/memorized/example).
 
 #### Start a Memorized client
 
